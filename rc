@@ -1,0 +1,13 @@
+#
+
+set-option -g history-limit		2147483647
+set-option -g escape-time		0
+set-option -g base-index		1
+set-option -g prefix			^q
+#set-option -g default-terminal		screen-256color
+set-option -g default-terminal		tmux-256color
+set-option -g destroy-unattached	off
+set-option -g status-left-length	99
+
+# nested sessions via doubling the prefix
+bind-key ^q send-prefix
