@@ -1,0 +1,16 @@
+#
+
+set-option -qg status-fg                colour28
+set-option -qg status-bg                black
+
+set-option -qg status-left \
+    "[#[fg=yellow]#{session_name}#[default]] #[fg=colour060]#(hostname -s)#[default]:#[fg=colour151]#{pane_current_path}#[default] "
+
+set-option -qwg window-status-current-format \
+    "#[default]»#[fg=colour148]#{window_name}#[default]#{?window_flags,·#[fg=colour058]#{window_flags}#[default],}"
+
+set-option -qwg window-status-format \
+    "#[fg=red]»#[fg=colour066]#{window_name}#[default]#{?window_flags,·#[fg=colour058]#{window_flags}#[default],}"
+
+bind-key z set-option -qg status
+bind-key Z resize-pane -Z

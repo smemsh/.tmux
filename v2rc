@@ -1,0 +1,18 @@
+#
+
+set-option -qg message-command-style    fg=yellow,bg=black
+set-option -qg message-style            fg=white,bg=black
+set-option -qg status-style             fg=colour28,bg=black
+
+set-option -qg status-left \
+    "[#[fg=yellow]#{session_name}#[default]] #[fg=colour060]#{host_short}#[default]:#[fg=colour151]#{b:pane_current_path} #[fg=colour099]#(git -C #{pane_current_path} symbolic-ref --short HEAD) #[default]"
+
+set-option -qwg window-status-current-format \
+    "#[fg=red]»#[fg=colour148]#{window_name}#[default]#{?window_flags,·#[fg=colour058]#{window_flags}#[default],#[default]}"
+
+set-option -qwg window-status-format \
+    "#[default]»#[fg=colour066]#{window_name}#[default]#{?window_flags,·#[fg=colour058]#{window_flags}#[default],#[default]}"
+
+# toggle status line
+bind-key -T prefix Z resize-pane -Z
+bind-key -T prefix z set-option -qg status
