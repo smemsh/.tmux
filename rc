@@ -22,7 +22,7 @@ if-shell "(($(tmux -V \
     | awk '{print $2}' \
     | awk -F - '{print $1}' \
     | awk -F . '{print $1}' \
-) >= 2 )) || (tmux -V | grep -qvP '\d')" \
+) >= 2 )) || (tmux -V | grep -qvP '\\d')" \
     "source-file ~/.tmux/v2rc" \
     "source-file ~/.tmux/v1rc" \
 ;
