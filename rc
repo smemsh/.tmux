@@ -18,14 +18,26 @@ set-option -qg status-right             "%H%M%S"
 #set-option -qwg window-status-separator "°"
 #set-option -qwg window-status-separator "¤"
 
-if-shell "(($(tmux -V \
-    | awk '{print $2}' \
-    | awk -F - '{print $1}' \
-    | awk -F . '{print $1}' \
-) >= 2 )) || (tmux -V | grep -qvP '\\d')" \
-    "source-file ~/.tmux/v2rc" \
-    "source-file ~/.tmux/v1rc" \
-;
+# version string looks like "tmux 2.6-pre3" or "tmux master" if it's
+# from git; we strip off any trailing stuff and requires tmux 2.6 for
+# "advanced" config; ideally we could do if-shell -F "#{version}" but -F
+# was only added for many tmux commands in 2.5.  this shell command is
+# quite a hack, but does the trick
+#
+if-shell " \
+	tmux -V \
+	| awk '{print $2}' \
+	| awk -F - '{print $1}' \
+	| awk '{ \
+		if ($1 ~ /^[[:digit:].]+$/) { \
+			exit !($1 >= 2.6) \
+		} else { \
+			exit !($1 == \"master\") \
+		} \
+	}'" \
+	"source-file ~/.tmux/v2rc" \
+	"source-file ~/.tmux/v1rc" \
+	;
 
 # nested sessions via doubling the prefix
 bind-key ^q send-prefix
