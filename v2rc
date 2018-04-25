@@ -14,5 +14,10 @@ set-option -qwg window-status-format \
     "#[default]»#[fg=colour066]#{window_name}#[default]#{?window_flags,·#[fg=colour058]#{window_flags}#[default],#[default]}"
 
 # toggle status line
+#
 bind-key -T prefix Z resize-pane -Z
 bind-key -T prefix z set-option -qg status
+
+# not available in v1.6 -> u14
+#
+set-option -qg renumber-windows         on

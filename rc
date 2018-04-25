@@ -1,15 +1,14 @@
 #
 
-set-option -qg history-limit		2147483647
-set-option -qg escape-time		0
-set-option -qg base-index		1
-set-option -qg prefix			^q
-set-option -qg default-terminal		tmux-256color
-set-option -qg destroy-unattached	off
-set-option -qg status-left-length       99
+set-option -g history-limit		2147483647
+set-option -g escape-time		0
+set-option -g base-index		1
+set-option -g prefix			^q
+set-option -g default-terminal		tmux-256color
+set-option -g destroy-unattached	off
+set-option -g status-left-length       99
 
-set-option -qg renumber-windows         on
-set-option -qg status-right             "%H%M%S"
+set-option -g status-right             "%H%M%S"
 
 # embedded these instead because it wants to use trailing, desire leading
 #set-option -qwg window-status-separator "·"
