@@ -32,7 +32,7 @@ if-shell " \
 		if ($1 ~ /^[[:digit:].]+$/) { \
 			exit !($1 >= 2.6) \
 		} else { \
-			exit !(i \
+			exit !( \
 				$1 == \"master\" || \
 				$1 == \"next\" || \
 				$1 == \"2.9a\" || \
