@@ -8,6 +8,7 @@ set-option -g default-terminal		tmux-256color
 set-option -g destroy-unattached	off
 set-option -g status-left-length       99
 
+set-option -g status-justify           right
 set-option -g status-right             "%H%M"
 
 # embedded these instead because it wants to use trailing, desire leading
