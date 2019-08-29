@@ -32,7 +32,12 @@ if-shell " \
 		if ($1 ~ /^[[:digit:].]+$/) { \
 			exit !($1 >= 2.6) \
 		} else { \
-			exit !($1 == \"master\" || $1 == \"next\") \
+			exit !(i \
+				$1 == \"master\" || \
+				$1 == \"next\" || \
+				$1 == \"2.9a\" || \
+				0 == 1 \
+			) \
 		} \
 	}'" \
 	"source-file ~/.tmux/v2rc" \
