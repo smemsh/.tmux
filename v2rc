@@ -11,16 +11,26 @@ set-option -qg status-left "\
 #[fg=colour099]\
 #(git -C #{pane_current_path} \
   symbolic-ref --short HEAD 2>/dev/null) \
-#[fg=green]\
 #(git -C #{pane_current_path} \
-  status --porcelain --untracked-files=no 2>/dev/null \
-  | cut -b 1-1 | sort | uniq \
-  | awk '/^[^[:space:]]/ {printf\(\"%%s\", $0\)}')\
-#[fg=red]\
-#(git -C #{pane_current_path} \
-  status --porcelain --untracked-files=no 2>/dev/null \
-  | cut -b 2-2 | sort | uniq \
-  | awk '/^[^[:space:]]/ {printf\(\"%%s\", $0\)}')\
+  status --untracked-files=normal --porcelain 2>/dev/null \
+  | awk '\
+    BEGIN { \
+        FS=\"\"; \
+        prefix[1] = \"#[fg=green]\"; \
+        prefix[2] = \"#[fg=red]\"; \
+        prefix[3] = \"#[default]\"; \
+    } { \
+        for \(i = 1; i <= 2; i++\) \
+            if \(\$i != \" \"\) seen[i][\$i] = 1; \
+    } END { \
+        for \(statcol in seen\) { \
+            if \(length\(seen[statcol]\)\) { \
+                printf\(\"%%s\", prefix[statcol]\); \
+                for \(letter in seen[statcol]\) { \
+                    if \(letter == \"?\") { untracked = 1; continue }; \
+                    printf\(\"%%c\", letter\);}}} \
+        if \(untracked\) printf\(\"%%s?\", prefix[3]\)\
+    }'\)\
 #[fg=colour113]\
 #(git -C #{pane_current_path} stash list 2>/dev/null \
   | wc -l | tr -d '\n' | sed s,^0\$,,) \
