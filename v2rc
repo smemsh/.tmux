@@ -32,8 +32,8 @@ set-option -qg status-left "\
         if \(untracked\) printf\(\"%%s?\", prefix[3]\)\
     }'\)\
 #[fg=colour113]\
-#(git -C #{pane_current_path} stash list 2>/dev/null \
-  | wc -l | tr -d '\n' | sed s,^0\$,,) \
+#(git -C #{pane_current_path} \
+  rev-list --walk-reflogs --count refs/stash 2>/dev/null) \
 #[default]\
 "
 
