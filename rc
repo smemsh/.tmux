@@ -16,7 +16,14 @@
 # 0/29999999 shown, scrolling painfully slow, then stops
 # interaction altogether, cpu 100%
 #
+# with 10M lines using GLIBC_TUNABLES=glibc.malloc.hugetlb=1 and
+# with /sys/kernel/mm/transparent_hugepage/ enable=madvise,
+# defrag=always, the "refresh-client -S" time reduces to 0.05s,
+# so we'll keep this in our invocation wrapper (see .bash commit
+# dbe32d9), but we don't want all tmux-started procs to get it
+#
 set-option -g history-limit 1048575 # nee 2147483647
+set-environment -gu GLIBC_TUNABLES
 
 ##################
 
