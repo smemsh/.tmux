@@ -10,11 +10,9 @@ set-option -qg status-left \
 set-option -qg status-right \
     "#[default] ┊ #[fg=colour065]#(grep ^MemFree /proc/meminfo | awk '{print rshift\($2, 10\)}')#[fg=colour071]m #[default]┊ #[fg=colour101]#(echo \"\(`awk '{print \$1}' /proc/loadavg` / `grep ^processor /proc/cpuinfo | wc -l`\) \* 100\" | bc -ql | sed 's,\\..*,,' | awk '{printf\(\"%%2u\", $0\)}')#[fg=colour102]%% "
 
-set-option -qwg window-status-current-format \
-    "#[fg=colour208]»#[fg=colour190]#{window_name}#[fg=colour037]·#{?window_flags,#[fg=colour058]#{window_flags}#[default], #[default]}"
+    "#[fg=colour208]»#[fg=colour190]#{window_name}#[fg=colour037]·#{?window_flags,#[fg=colour058]#{window_flags}, }#[default]"
 
-set-option -qwg window-status-format \
-         "#[default]»#[fg=colour066]#{window_name}#[fg=colour037]·#{?window_flags,#[fg=colour058]#{window_flags}#[default], #[default]}"
+         "#[default]»#[fg=colour066]#{window_name}#[fg=colour037]·#{?window_flags,#[fg=colour058]#{window_flags}, }#[default]"
 
 # toggle status line
 #
