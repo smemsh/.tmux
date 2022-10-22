@@ -44,12 +44,10 @@ set-option -qg status-right "\
 #[fg=colour071]m \
 #[default]┊ \
 #[fg=colour101]\
-#(echo \"\(\
-    `awk '{print \$1}' /proc/loadavg` / \
-    `grep ^processor /proc/cpuinfo | wc -l`\
-  \) \* 100\" \
-  | bc -ql | sed 's,\\..*,,' \
-  | awk '{printf\(\"%%2u\", $0\)}')\
+#(load=$\(awk '{print \\$1}' /proc/loadavg\); \
+  nprocs=$\(\(grep ^processor /proc/cpuinfo | wc -l\)\); \
+  loadmath=\"x = \(\($load / $nprocs\) * 100\); scale = 0; x / 1\";
+  echo \"$loadmath\" | bq -ql)\
 #[fg=colour102]%% \
 "
 
