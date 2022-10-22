@@ -44,14 +44,17 @@ set-option -g status-right             "%H%M"
 #set-option -qwg window-status-separator "°"
 #set-option -qwg window-status-separator "¤"
 
-# version string looks like "tmux 2.6-pre3" or "tmux master" if it's
-# from git; we strip off any trailing stuff and requires tmux 2.6 for
-# "advanced" config; ideally we could do if-shell -F "#{version}" but -F
-# was only added for many tmux commands in 2.5.  this shell command is
-# quite a hack, but does the trick
+# need tmux 2.6 for "advanced" config; ideally we could do
+# if-shell -F "#{version}" but -F was only added mostly in 2.5,
+# we are running in places with tmux as old as 1.6
+# TODO those places will not exist forever
 #
 if-shell " \
-	tmux -V \
+	$\(readlink /proc/$\(awk 'BEGIN { \
+		split(ENVIRON[\"TMUX\"], tvar, \",\"); \
+		pid = tvar[2]; \
+		print pid; \
+	}')/exe\) -V \
 	| awk '{print $2}' \
 	| awk -F - '{print $1}' \
 	| awk '{ \
