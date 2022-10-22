@@ -1,5 +1,30 @@
 #
 
+set-option -g prefix ^q
+bind-key ^q send-prefix # nested sessions via doubling prefix
+
+#
+set-option -g escape-time 0
+set-option -g base-index 1
+
+#
+set-option -g destroy-unattached off
+set-option -g default-terminal tmux-256color
+
+#
+set-option -g status-left-length 99
+set-option -g status-justify right
+set-option -g status-right "%H%M"
+
+# embedded these instead because it wants to use trailing, desire leading
+#set-option -qwg window-status-separator "·"
+#set-option -qwg window-status-separator "¦"
+#set-option -qwg window-status-separator " »"
+#set-option -qwg window-status-separator "°"
+#set-option -qwg window-status-separator "¤"
+
+###
+
 # status format subshells using #() (and new panes) fork and
 # copy PTEs which become large and copy very slow with large
 # scrollback, see tmux issue 3352 for description, workarounds
@@ -25,53 +50,30 @@
 set-option -g history-limit 1048575 # nee 2147483647
 set-environment -gu GLIBC_TUNABLES
 
-##################
-
-set-option -g escape-time		0
-set-option -g base-index		1
-set-option -g prefix			^q
-set-option -g default-terminal		tmux-256color
-set-option -g destroy-unattached	off
-set-option -g status-left-length       99
-
-set-option -g status-justify           right
-set-option -g status-right             "%H%M"
-
-# embedded these instead because it wants to use trailing, desire leading
-#set-option -qwg window-status-separator "·"
-#set-option -qwg window-status-separator "¦"
-#set-option -qwg window-status-separator " »"
-#set-option -qwg window-status-separator "°"
-#set-option -qwg window-status-separator "¤"
-
 # need tmux 2.6 for "advanced" config; ideally we could do
 # if-shell -F "#{version}" but -F was only added mostly in 2.5,
 # we are running in places with tmux as old as 1.6
 # TODO those places will not exist forever
 #
 if-shell " \
-	$\(readlink /proc/$\(awk 'BEGIN { \
-		split(ENVIRON[\"TMUX\"], tvar, \",\"); \
-		pid = tvar[2]; \
-		print pid; \
-	}')/exe\) -V \
-	| awk '{print $2}' \
-	| awk -F - '{print $1}' \
-	| awk '{ \
-		if ($1 ~ /^[[:digit:].]+$/) { \
-			exit !($1 >= 2.6) \
-		} else { \
-			exit !( \
-				$1 == \"master\" || \
-				$1 == \"next\" || \
-				$1 == \"2.9a\" || \
-				0 == 1 \
-			) \
-		} \
-	}'" \
-	"source-file ~/.tmux/v2rc" \
-	"source-file ~/.tmux/v1rc" \
-	;
-
-# nested sessions via doubling the prefix
-bind-key ^q send-prefix
+$\(readlink /proc/$\(awk 'BEGIN { \
+	split(ENVIRON[\"TMUX\"], tvar, \",\"); \
+	pid = tvar[2]; \
+	print pid; \
+}')/exe\) -V \
+| awk '{print $2}' \
+| awk -F - '{print $1}' \
+| awk '{ \
+	if ($1 ~ /^[[:digit:].]+$/) { \
+		exit !($1 >= 2.6) \
+	} else { exit !( \
+		$1 == \"master\" || \
+		$1 == \"next\" || \
+		$1 == \"2.9a\" || \
+		0 == 1)\
+	}
+}'" \
+"source-file ~/.tmux/v2rc" \
+"source-file ~/.tmux/v1rc" \
+;
+#

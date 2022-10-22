@@ -1,16 +1,20 @@
 #
 
-set-option -g status-fg                colour28
-set-option -g status-bg                black
-
-set-option -g status-left \
-    "[#[fg=yellow]#S#[default]] #[fg=colour060]#(hostname -s)#[default]"
-
-set-option -wg window-status-current-format \
-    "#[default]»#[fg=colour148]#W#[default]#[fg=colour058]#F#[default]"
-
-set-option -wg window-status-format \
-    "#[fg=red]»#[fg=colour066]#W#[default]#[fg=colour058]#F#[default]"
-
-bind-key z set-option -g status
 bind-key Z resize-pane -Z
+bind-key z set-option -g status
+
+#
+set-option -g status-fg colour28
+set-option -g status-bg black
+
+#
+set-option -g status-left "\
+[#[fg=yellow]#S#[default]] #[fg=colour060]#(hostname -s)#[default]"
+
+#
+set-option -wg window-status-current-format "\
+#[default]»#[fg=colour148]#W#[default]#[fg=colour058]#F#[default]"
+
+#
+set-option -wg window-status-format "\
+#[fg=red]»#[fg=colour066]#W#[default]#[fg=colour058]#F#[default]"

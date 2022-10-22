@@ -1,9 +1,17 @@
 #
 
-set-option -qg message-command-style    fg=yellow,bg=black
-set-option -qg message-style            fg=white,bg=black
-set-option -qg status-style             fg=colour28,bg=black
+bind-key -T prefix Z resize-pane -Z
+bind-key -T prefix z set-option -qg status
 
+#
+set-option -qg renumber-windows on # not in v1.6 (u14)
+
+#
+set-option -qg message-command-style fg=yellow,bg=black
+set-option -qg message-style fg=white,bg=black
+set-option -qg status-style fg=colour28,bg=black
+
+#
 set-option -qg status-left "\
 [#[fg=yellow]#{session_name}#[default]] \
 #[fg=colour060]#{host_short}#[default]:\
@@ -37,6 +45,7 @@ set-option -qg status-left "\
 #[default]\
 "
 
+#
 set-option -qg status-right "\
 #[default] ┊ \
 #[fg=colour065]\
@@ -51,6 +60,7 @@ set-option -qg status-right "\
 #[fg=colour102]%% \
 "
 
+#
 set-option -qwg window-status-current-format "\
 #[fg=colour208]»\
 #[fg=colour190]#{window_name}\
@@ -59,6 +69,7 @@ set-option -qwg window-status-current-format "\
 #[default]\
 "
 
+#
 set-option -qwg window-status-format "\
 #[default]»\
 #[fg=colour066]#{window_name}\
@@ -66,12 +77,3 @@ set-option -qwg window-status-format "\
 #{?window_flags,#[fg=colour058]#{window_flags}, }\
 #[default]\
 "
-
-# toggle status line
-#
-bind-key -T prefix Z resize-pane -Z
-bind-key -T prefix z set-option -qg status
-
-# not available in v1.6 -> u14
-#
-set-option -qg renumber-windows         on
