@@ -1,6 +1,25 @@
 #
 
-set-option -g history-limit		2147483647
+# status format subshells using #() (and new panes) fork and
+# copy PTEs which become large and copy very slow with large
+# scrollback, see tmux issue 3352 for description, workarounds
+# and potential [future] solution with CLONE_VFORK
+#
+# to add 10M scrollback for testing:
+# $ perl -le 'for ($i = 0; $i < 10000000; $i++) {print "a" x 78}'
+#
+# with no status subshells, "refresh-client -S" takes 0s, no
+# matter scrollback.  with status-left subshells,
+# "refresh-client -S" takes 0.13s, 0.22s, 0.31s and 0.42s for
+# each additional 10M lines.  by this time cpu fans are going,
+# takes 66 seconds to enter copy-paste mode, with lines
+# 0/29999999 shown, scrolling painfully slow, then stops
+# interaction altogether, cpu 100%
+#
+set-option -g history-limit 1048575 # nee 2147483647
+
+##################
+
 set-option -g escape-time		0
 set-option -g base-index		1
 set-option -g prefix			^q
