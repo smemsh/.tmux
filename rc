@@ -64,7 +64,7 @@ if-shell "\
 | awk '{print \$2}' \
 | awk -F - '{print \$1}' \
 | awk '{ \
-	if (\$1 ~ /^[[:digit:].]+\$/) { \
+	if (\$1 \~ /^[[:digit:].]+\$/) { \
 		exit !(\$1 >= 2.6) \
 	} else { exit !( \
 		\$1 == \"master\" || \
