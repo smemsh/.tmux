@@ -55,7 +55,7 @@ set-option -qg status-right "\
 #[fg=colour101]\
 #(load=\$\(awk '{print \$1}' /proc/loadavg\); \
   nprocs=\$\(\(\$\(grep ^processor /proc/cpuinfo | wc -l\)\)\); \
-  loadmath=\"x = \(\(\$load / \$nprocs\) * 100\); scale = 0; x / 1\";
+  loadmath=\"x = \(\(\$load / \$nprocs\) * 100\); scale = 0; x / 1\";\
   echo \"\$loadmath\" | bc -ql)\
 #[fg=colour102]%% \
 "
