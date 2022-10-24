@@ -29,6 +29,8 @@ bind * "new -As * ; renamew task ; splitw -v ; splitw -hl 25% ; lastp ; mkwins"
 
 bind z set-option -qg status
 bind Z resize-pane -Z
+bind s choose-tree -ZNs
+bind w choose-tree -ZNw
 
 #
 set-option -qg renumber-windows on # not in v1.6 (u14)
