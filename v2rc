@@ -18,6 +18,12 @@ bind C-Space switchc -l # no S-space keysyms?
 bind - swapw -dt:-1
 bind = swapw -dt:+1
 
+set -s command-alias[0] mkwins="neww -dn edit ; neww -dn test"
+
+bind S "new -As / ; renamew con ; mkwins"
+bind _ "new -As - ; renamew con ; mkwins"
+bind * "new -As * ; renamew task ; splitw -v ; splitw -hl 25% ; lastp ; mkwins"
+
 bind z set-option -qg status
 bind Z resize-pane -Z
 
