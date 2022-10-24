@@ -15,6 +15,9 @@ bind l selectw -n
 bind Space selectw -l
 bind C-Space switchc -l # no S-space keysyms?
 
+bind - swapw -dt:-1
+bind = swapw -dt:+1
+
 bind z set-option -qg status
 bind Z resize-pane -Z
 
