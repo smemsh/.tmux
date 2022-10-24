@@ -33,6 +33,8 @@ bind s choose-tree -ZNs
 bind w choose-tree -ZNw
 bind B choose-buffer -Z
 
+bind Q confirm -p "kill-server ?" kill-server
+
 #
 set-option -qg renumber-windows on # not in v1.6 (u14)
 
