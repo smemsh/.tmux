@@ -1,7 +1,9 @@
 #
 
-bind Z resize-pane -Z
+set-hook -g session-created "rename / ; set-hook -gu session-created"
+
 bind z set-option -qg status
+bind Z resize-pane -Z
 
 #
 set-option -qg renumber-windows on # not in v1.6 (u14)
