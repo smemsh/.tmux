@@ -1,7 +1,7 @@
 #
 
 set-option -g prefix ^q
-bind-key ^q send-prefix # nested sessions via doubling prefix
+bind-key ^q send-prefix # double for nested sessions
 
 #
 set-option -g escape-time 0
