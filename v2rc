@@ -31,6 +31,7 @@ bind z set-option -qg status
 bind Z resize-pane -Z
 bind s choose-tree -ZNs
 bind w choose-tree -ZNw
+bind B choose-buffer -Z
 
 #
 set-option -qg renumber-windows on # not in v1.6 (u14)
