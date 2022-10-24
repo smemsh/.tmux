@@ -1,7 +1,7 @@
 #
 
-bind-key Z resize-pane -Z
-bind-key z set-option -qg status
+bind Z resize-pane -Z
+bind z set-option -qg status
 
 #
 set-option -qg renumber-windows on # not in v1.6 (u14)
