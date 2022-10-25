@@ -10,10 +10,10 @@ set-hook -g session-created "rename / ; set-hook -gu session-created"
 
 ###
 
-# ~v2.6+
+# ~v2.6+ subst, fnmatch
 if-shell -F "" ""
 
-# version ~2.9, resubst v3.0+
+# v3.0+ resubst
 set -gqF @version "#{s/[^0-9.]//:version}"
 if-shell -F "#{@version}" "set -gqF @major \"#{s/.[0-9]+$//:@version}\""
 if-shell -F "#{==:#{@major},#{@version}}" \
@@ -21,7 +21,7 @@ if-shell -F "#{==:#{@major},#{@version}}" \
   "set -gqF @major \"#{s/.[0-9]+$//:@version}\" ; \
    set -gqF @minor \"#{s/[0-9]+.//:@version}\""
 
-# v3.2+
+# v3.2+ math
 if-shell -F "#{e|>=|f|0:#{@version},3.0}" \
   "set -g @latest 1" \
   "set -g @latest 0"
@@ -41,18 +41,13 @@ bind l selectw -n
 bind Space selectw -l
 bind C-Space switchc -l # no S-space keysyms?
 
-bind - swapw -dt:-1
-bind = swapw -dt:+1
 bind z set-option -qg status
 bind Z resize-pane -Z
 
-bind "\$" selectw -t "{end}"
-bind 0 selectw -t "{start}"
 bind Q confirm -p "kill-server ?" kill-server
 
 ###
 
-# alias syntax keeps 2.9 compat (todo: test 2.6)
 set -g command-alias[100] mkedit='neww -dn edit'
 set -g command-alias[101] mktest='neww -dn test'
 if-shell -F "#{@latest}" \
@@ -64,16 +59,36 @@ bind _ new -As - \; renamew con \; mkedit \; mktest
 bind * new -As * \; renamew task \; \
   splitw -v \; vsplit25 \; lastp \; mkedit \; mktest
 
-bind s choose-tree -ZNs
-bind w choose-tree -ZNw
-bind B choose-buffer -Z
+#
+if-shell -F "#{@latest}" \
+  "bind 0 selectw -t '{start}'" \
+  "bind 0 selectw -t 1"
 
+if-shell -F "#{@latest}" \
+  "bind \"\$\" selectw -t '{end}'" \
+  "bind '$' selectw -t 1 \\; selectw -p"
+
+#
+if-shell -F "#{==:#{@major},2}" \
+  "bind - swapw -t:-1 ; bind = swapw -t:+1" \
+
+if-shell -F "#{||:#{@latest},#{==:#{@major},3}}" \
+  "bind - swapw -dt:-1 ; bind = swapw -dt:+1" \
+
+if-shell -F "#{&&:#{==:#{@major},3},#{==:#{@minor},0}}" \
+  "bind - swapw -t:-1 \\; last ; bind = swapw -t:+1 \\; last"
+
+#
+set -g command-alias[103] chses='choose-tree -Ns'
+set -g command-alias[104] chwin='choose-tree -Nw'
+set -g command-alias[105] chbuf='choose-buffer'
+
+if-shell -F "#{&&:#{==:#{@major},2},#{m:*2.[678]*,#{@version}}}" \
+  "bind s chses ; bind w chwin ; bind B chbuf" \
+  "bind s chses -Z ; bind w chwin -Z ; bind B chbuf -Z"
 
 ###
 
-
-
-#
 set-option -qg status-left "\
 [#[fg=yellow]#{session_name}#[default]] \
 #[fg=colour060]#{host_short}#[default]:\
