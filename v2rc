@@ -1,5 +1,15 @@
 #
 
+set -qg renumber-windows on # not in v1.6 (u14)
+set -qg message-command-style fg=yellow,bg=black
+set -qg message-style fg=white,bg=black
+set -qg status-style fg=colour28,bg=black
+
+# no session yet at load-time
+set-hook -g session-created "rename / ; set-hook -gu session-created"
+
+###
+
 # ~v2.6+
 if-shell -F "" ""
 
@@ -15,10 +25,6 @@ if-shell -F "#{==:#{@major},#{@version}}" \
 if-shell -F "#{e|>=|f|0:#{@version},3.0}" \
   "set -g @latest 1" \
   "set -g @latest 0"
-
-# no session yet at load-time
-set-hook -g session-created "\
-  rename / ; set-hook -gu session-created"
 
 ###
 
@@ -63,12 +69,7 @@ bind Q confirm -p "kill-server ?" kill-server
 
 ###
 
-set-option -qg renumber-windows on # not in v1.6 (u14)
 
-#
-set-option -qg message-command-style fg=yellow,bg=black
-set-option -qg message-style fg=white,bg=black
-set-option -qg status-style fg=colour28,bg=black
 
 #
 set-option -qg status-left "\
