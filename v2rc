@@ -1,16 +1,20 @@
 #
 
-# v3.0+
+# ~v2.6+
+if-shell -F "" ""
+
+# version ~2.9, resubst v3.0+
 set -gqF @version "#{s/[^0-9.]//:version}"
-if-shell -F "#{@version}" "\
-  set -gF @major \"#{s/.[0-9]+$//:@version}\" ; \
-  set -gF @minor \"#{s/[0-9]+.//:@version}\" ; \
-"
+if-shell -F "#{@version}" "set -gqF @major \"#{s/.[0-9]+$//:@version}\""
+if-shell -F "#{==:#{@major},#{@version}}" \
+  "set -gF @major 2" \
+  "set -gqF @major \"#{s/.[0-9]+$//:@version}\" ; \
+   set -gqF @minor \"#{s/[0-9]+.//:@version}\""
+
 # v3.2+
 if-shell -F "#{e|>=|f|0:#{@version},3.0}" \
   "set -g @latest 1" \
-  "set -g @latest 0" \
-;
+  "set -g @latest 0"
 
 # no session yet at load-time
 set-hook -g session-created "\
