@@ -43,9 +43,14 @@ bind C-Space switchc -l # no S-space keysyms?
 
 bind - swapw -dt:-1
 bind = swapw -dt:+1
+bind z set-option -qg status
+bind Z resize-pane -Z
 
 bind "\$" selectw -t "{end}"
 bind 0 selectw -t "{start}"
+bind Q confirm -p "kill-server ?" kill-server
+
+###
 
 # alias syntax keeps 2.9 compat (todo: test 2.6)
 set -g command-alias[100] mkedit='neww -dn edit'
@@ -59,13 +64,10 @@ bind _ new -As - \; renamew con \; mkedit \; mktest
 bind * new -As * \; renamew task \; \
   splitw -v \; vsplit25 \; lastp \; mkedit \; mktest
 
-bind z set-option -qg status
-bind Z resize-pane -Z
 bind s choose-tree -ZNs
 bind w choose-tree -ZNw
 bind B choose-buffer -Z
 
-bind Q confirm -p "kill-server ?" kill-server
 
 ###
 
