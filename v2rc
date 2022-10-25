@@ -2,6 +2,30 @@
 
 set-hook -g session-created "rename / ; set-hook -gu session-created"
 
+set -gqF @version "#{s/[^0-9.]//:version}"
+
+# 3.0+
+if-shell -F "#{@version}" "\
+  set -gF @major \"#{s/.[0-9]+$//:@version}\" ; \
+  set -gF @minor \"#{s/[0-9]+.//:@version}\" ; \
+"
+
+# 3.2+
+if-shell -F "#{e|>=|f|0:#{@version},3.0}" \
+  "set -g @latest 1" \
+  "set -g @latest 0" \
+;
+
+# alias syntax keeps 2.9 compat (TODO: test 2.6)
+set -g command-alias[100] mkedit='neww -dn edit'
+set -g command-alias[101] mktest='neww -dn test'
+if-shell -F "#{@latest}" \
+  "set -g command-alias[102] vsplit25='splitw -h -l 25%%'" \
+  "set -g command-alias[102] vsplit25='splitw -h -p 25'" \
+;
+
+###
+
 bind H selectp -L
 bind J selectp -U
 bind K selectp -D
@@ -18,14 +42,13 @@ bind C-Space switchc -l # no S-space keysyms?
 bind - swapw -dt:-1
 bind = swapw -dt:+1
 
-bind \$ selectw -t "{end}"
+bind "\$" selectw -t "{end}"
 bind 0 selectw -t "{start}"
 
-set -s command-alias[0] mkwins="neww -dn edit ; neww -dn test"
-
-bind S "new -As / ; renamew con ; mkwins"
-bind _ "new -As - ; renamew con ; mkwins"
-bind * "new -As * ; renamew task ; splitw -v ; splitw -hl 25% ; lastp ; mkwins"
+bind S new -As / \; renamew con \; mkedit \; mktest
+bind _ new -As - \; renamew con \; mkedit \; mktest
+bind * new -As * \; renamew task \; \
+  splitw -v \; vsplit25 \; lastp \; mkedit \; mktest
 
 bind z set-option -qg status
 bind Z resize-pane -Z
@@ -35,7 +58,8 @@ bind B choose-buffer -Z
 
 bind Q confirm -p "kill-server ?" kill-server
 
-#
+###
+
 set-option -qg renumber-windows on # not in v1.6 (u14)
 
 #
