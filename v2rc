@@ -1,28 +1,20 @@
 #
 
-set-hook -g session-created "rename / ; set-hook -gu session-created"
-
+# v3.0+
 set -gqF @version "#{s/[^0-9.]//:version}"
-
-# 3.0+
 if-shell -F "#{@version}" "\
   set -gF @major \"#{s/.[0-9]+$//:@version}\" ; \
   set -gF @minor \"#{s/[0-9]+.//:@version}\" ; \
 "
-
-# 3.2+
+# v3.2+
 if-shell -F "#{e|>=|f|0:#{@version},3.0}" \
   "set -g @latest 1" \
   "set -g @latest 0" \
 ;
 
-# alias syntax keeps 2.9 compat (TODO: test 2.6)
-set -g command-alias[100] mkedit='neww -dn edit'
-set -g command-alias[101] mktest='neww -dn test'
-if-shell -F "#{@latest}" \
-  "set -g command-alias[102] vsplit25='splitw -h -l 25%%'" \
-  "set -g command-alias[102] vsplit25='splitw -h -p 25'" \
-;
+# no session yet at load-time
+set-hook -g session-created "\
+  rename / ; set-hook -gu session-created"
 
 ###
 
@@ -45,6 +37,13 @@ bind = swapw -dt:+1
 bind "\$" selectw -t "{end}"
 bind 0 selectw -t "{start}"
 
+# alias syntax keeps 2.9 compat (todo: test 2.6)
+set -g command-alias[100] mkedit='neww -dn edit'
+set -g command-alias[101] mktest='neww -dn test'
+if-shell -F "#{@latest}" \
+  "set -g command-alias[102] vsplit25='splitw -h -l 25%%'" \
+  "set -g command-alias[102] vsplit25='splitw -h -p 25'" \
+;
 bind S new -As / \; renamew con \; mkedit \; mktest
 bind _ new -As - \; renamew con \; mkedit \; mktest
 bind * new -As * \; renamew task \; \
