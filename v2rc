@@ -48,14 +48,20 @@ bind Q confirm -p "kill-server ?" kill-server
 
 ###
 
+# indices needed on 2.6, not on 3.4, others untested
 set -g command-alias[100] mkw='neww -dn'
-set -gF command-alias[102] hsplit25="\
+set -g command-alias[101] mkww='neww -n'
+set -g command-alias[110] selw='selectw -t'
+set -gF command-alias[111] vsplit='splitw -v'
+set -gF command-alias[112] hsplit='splitw -h'
+set -gF command-alias[113] hsplit25="\
   splitw -h -#{?@latest,l,p} 25#{?@latest,%,}"
 
 bind S new -As / \; renamew con \; mkw edit \; mkw test
 bind _ new -As - \; renamew con \; mkw edit \; mkw test
 bind * new -As * \; \
-  renamew task \; \ splitw -v \; hsplit25 \; lastp \; \
+  renamew task \; vsplit \; hsplit25 \; lastp \; \
+  mkww query \; hsplit \; hsplit \; selw task \; \
   mkw edit \; mkw test
 
 #
@@ -78,9 +84,9 @@ if -F "#{&&:#{==:#{@major},3},#{==:#{@minor},0}}" \
   "bind - swapw -t:-1 \\; last ; bind = swapw -t:+1 \\; last"
 
 #
-set -g command-alias[103] chses='choose-tree -Ns'
-set -g command-alias[104] chwin='choose-tree -Nw'
-set -g command-alias[105] chbuf='choose-buffer'
+set -g command-alias[120] chses='choose-tree -Ns'
+set -g command-alias[121] chwin='choose-tree -Nw'
+set -g command-alias[122] chbuf='choose-buffer'
 
 if -F "#{&&:#{==:#{@major},2},#{m:*2.[678]*,#{@version}}}" \
   "bind s chses ; bind w chwin ; bind B chbuf" \
