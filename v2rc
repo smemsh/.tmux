@@ -49,13 +49,13 @@ bind Q confirm -p "kill-server ?" kill-server
 ###
 
 set -g command-alias[100] mkw='neww -dn'
-set -gF command-alias[102] vsplit25="\
+set -gF command-alias[102] hsplit25="\
   splitw -h -#{?@latest,l,p} 25#{?@latest,%,}"
 
 bind S new -As / \; renamew con \; mkw edit \; mkw test
 bind _ new -As - \; renamew con \; mkw edit \; mkw test
 bind * new -As * \; \
-  renamew task \; \ splitw -v \; vsplit25 \; lastp \; \
+  renamew task \; \ splitw -v \; hsplit25 \; lastp \; \
   mkw edit \; mkw test
 
 #
