@@ -50,10 +50,9 @@ bind Q confirm -p "kill-server ?" kill-server
 
 set -g command-alias[100] mkedit='neww -dn edit'
 set -g command-alias[101] mktest='neww -dn test'
-if-shell -F "#{@latest}" \
-  "set -g command-alias[102] vsplit25='splitw -h -l 25%%'" \
-  "set -g command-alias[102] vsplit25='splitw -h -p 25'" \
-;
+set -gF command-alias[102] vsplit25="\
+  splitw -h -#{?@latest,l,p} 25#{?@latest,%,}"
+
 bind S new -As / \; renamew con \; mkedit \; mktest
 bind _ new -As - \; renamew con \; mkedit \; mktest
 bind * new -As * \; renamew task \; \
