@@ -57,7 +57,7 @@ set -gF command-alias[112] hsplit='splitw -h'
 set -gF command-alias[113] hsplit25="\
   splitw -h -#{?@latest,l,p} 25#{?@latest,%,}"
 
-bind S new -As / \; \
+bind ? new -As / \; \
   if -F "#{||:#{!=:#{N/w:con},1},#{==:#{@latest},0}}" "\
     renamew con \; mkw edit \; mkw test"
 
