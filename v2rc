@@ -29,8 +29,8 @@ if -F "#{e|>=|f|0:#{@version},3.0}" \
 ###
 
 bind H selectp -L
-bind J selectp -U
-bind K selectp -D
+bind J selectp -D
+bind K selectp -U
 bind L selectp -R
 
 bind h selectw -p
