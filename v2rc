@@ -22,7 +22,7 @@ if -F "#{==:#{@major},#{@version}}" \
    set -gqF @minor \"#{s/[0-9]+.//:@version}\""
 
 # v3.2+ math
-if -F "#{e|>=|f|0:#{@version},3.0}" \
+if -F "#{e|>=|f|0:#{@version},3.2}" \
   "set -g @latest 1" \
   "set -g @latest 0"
 
