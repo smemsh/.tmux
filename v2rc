@@ -58,15 +58,15 @@ set -gF command-alias[113] hsplit25="\
   splitw -h -#{?@latest,l,p} 25#{?@latest,%,}"
 
 bind ? new -As / \; \
-  if -F "#{||:#{!=:#{N/w:con},1},#{==:#{@latest},0}}" "\
+  if -F "#{&&:#{!=:#{N/w:con},1},#{==:#{@latest},1}}" "\
     renamew con \; mkw edit \; mkw test"
 
 bind _ new -As - \; \
-  if -F "#{||:#{!=:#{N/w:con},1},#{==:#{@latest},0}}" "\
+  if -F "#{&&:#{!=:#{N/w:con},1},#{==:#{@latest},1}}" "\
     renamew con \; mkw edit \; mkw test"
 
 bind * new -As * \; \
-  if -F "#{||:#{!=:#{N/w:task},1},#{==:#{@latest},0}}" "\
+  if -F "#{&&:#{!=:#{N/w:task},1},#{==:#{@latest},1}}" "\
     renamew task \; vsplit \; hsplit25 \; lastp \; \
     mkww query \; hsplit \; hsplit \; selw task \; \
     mkw edit \; mkw test \; \
