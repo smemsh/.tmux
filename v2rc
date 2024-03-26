@@ -134,7 +134,7 @@ set -qg status-left "\
 set -qg status-right "\
 #[default] ┊ \
 #[fg=colour065]\
-#(grep ^MemFree /proc/meminfo | awk '{print rshift\(\$2, 10\)}')\
+#(grep ^MemAvailable /proc/meminfo | gawk '{print rshift\(\$2, 10\)}')\
 #[fg=colour071]m \
 #[default]┊ \
 #[fg=colour101]\
