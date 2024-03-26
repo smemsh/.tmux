@@ -111,7 +111,7 @@ set -qg status-left "\
   symbolic-ref --short HEAD 2>/dev/null) \
 #(git -C #{pane_current_path} \
   status --untracked-files=normal --porcelain 2>/dev/null \
-  | awk '\
+  | gawk '\
     BEGIN { \
         FS=\"\"; \
         prefix[1] = \"#[fg=green]\"; \
@@ -143,7 +143,7 @@ set -qg status-right "\
 #[fg=colour071]m \
 #[default]┊ \
 #[fg=colour101]\
-#(load=\$\(awk '{print \$1}' /proc/loadavg\); \
+#(load=\$\(gawk '{print \$1}' /proc/loadavg\); \
   nprocs=\$\(\(\$\(grep ^processor /proc/cpuinfo | wc -l\)\)\); \
   loadmath=\"x = \(\(\$load / \$nprocs\) * 100\); scale = 0; x / 1\";\
   echo \"\$loadmath\" | bc -ql)\
