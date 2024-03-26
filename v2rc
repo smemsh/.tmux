@@ -38,6 +38,9 @@ bind j switchc -n
 bind k switchc -p
 bind l selectw -n
 
+bind 0 selectw -t :^
+bind '$' selectw -t ':$'
+
 bind Space selectw -l
 bind C-Space switchc -l # no S-space keysyms?
 
@@ -73,15 +76,7 @@ bind * new -As * \; \
   "
 
 #
-if -F "#{@latest}" \
-  "bind 0 selectw -t '{start}'" \
-  "bind 0 selectw -t 1"
 
-if -F "#{@latest}" \
-  "bind \"\$\" selectw -t '{end}'" \
-  "bind '$' selectw -t 1 \\; selectw -p"
-
-#
 if -F "#{==:#{@major},2}" \
   "bind - swapw -t:-1 ; bind = swapw -t:+1" \
 
