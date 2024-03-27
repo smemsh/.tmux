@@ -10,21 +10,56 @@ set-hook -g session-created "rename / ; set-hook -gu session-created"
 
 ###
 
-# ~v2.6+ subst, fnmatch
-if -F "" ""
+set -g @v20 0
+set -g @v21 0
+set -g @v24 0
+set -g @v26 0
 
-# v3.0+ resubst
+# v2.0 if-shell -F
+if -F "1" "set -g @version 2.0"
+set -g @v20 1
+
+# v2.1 set -q
+set -gq @version "2.1"
+set -g @v21 1
+
+# v2.4 %if/%endif
+%if 1
+set -g @v24 1
+%endif
+
+# v2.6+ subst, #{m:} fnmatch
+set -gqF @version "#{s/2.1/2.6/:@version}"
+if -F "#{==:#{@version},2.6}" \
+  "set -g @v26 1" \
+  "set -g @v26 0"
+
+# v2.7 choose-{tree,client,buffer} -Z
+if -F "#{&&:#{==:#{@major},2},#{m:*2.[789]*,#{@version}}}" \
+  "set -g @v27 1" \
+  "set -g @v27 0"
+
+# v3.0+ resubst, #{>=:}, #{m/r:} regex
 set -gqF @version "#{s/[^0-9.]//:version}"
 if -F "#{@version}" "set -gqF @major \"#{s/.[0-9]+$//:@version}\""
+if -F "#{>=:#{@major},3}" \
+  "set -g @v27 1"
 if -F "#{==:#{@major},#{@version}}" \
-  "set -gF @major 2" \
+  "set -g @major 2 ; \
+   set -g @v30 0" \
   "set -gqF @major \"#{s/.[0-9]+$//:@version}\" ; \
-   set -gqF @minor \"#{s/[0-9]+.//:@version}\""
+   set -gqF @minor \"#{s/[0-9]+.//:@version}\" ; \
+   set -g @v30 1"
 
-# v3.2+ math
+# v3.1+ splitw -l %, -t {start}
+if -F "#{||:#{>=:#{@major},4},#{&&:#{==:#{@major},3},#{>=:#{@minor},1}}}" \
+  "set -g @v31 1" \
+  "set -g @v31 0"
+
+# v3.2+ #{e||:}, ${N/w:}
 if -F "#{e|>=|f|0:#{@version},3.2}" \
-  "set -g @latest 1" \
-  "set -g @latest 0"
+  "set -g @v32 1" \
+  "set -g @v32 0"
 
 ###
 
@@ -57,18 +92,18 @@ set -g command-alias[110] selw='selectw -t'
 set -gF command-alias[111] vsplit='splitw -v'
 set -gF command-alias[112] hsplit='splitw -h'
 set -gF command-alias[113] hsplit25="\
-  splitw -h -#{?@latest,l,p} 25#{?@latest,%,}"
+  splitw -h -#{?@v31,l,p} 25#{?@v31,%,}"
 
 bind ? new -As / \; \
-  if -F "#{&&:#{@latest},#{!=:#{N/w:con},1}}" "\
+  if -F "#{&&:#{@v32},#{!=:#{N/w:con},1}}" "\
     renamew con \; mkw edit \; mkw test"
 
 bind _ new -As - \; \
-  if -F "#{&&:#{@latest},#{!=:#{N/w:con},1}}" "\
+  if -F "#{&&:#{@v32},#{!=:#{N/w:con},1}}" "\
     renamew con \; mkw edit \; mkw test"
 
 bind * new -As * \; \
-  if -F "#{&&:#{@latest},#{!=:#{N/w:task},1}}" "\
+  if -F "#{&&:#{@v32},#{!=:#{N/w:task},1}}" "\
     renamew task \; vsplit \; hsplit25 \; lastp \; \
     mkww query \; hsplit \; hsplit \; selw task \; \
     mkw edit \; mkw test \; \
@@ -76,20 +111,21 @@ bind * new -As * \; \
 
 #
 
-if -F "#{==:#{@major},2}" \
-  "bind - swapw -t:-1 ; bind = swapw -t:+1" \
+set -gF command-alias[120] chses="choose-tree #{?@v31,-Z,} -Ns"
+set -gF command-alias[121] chwin="choose-tree #{?@v31,-Z,} -Nw"
+set -gF command-alias[122] chbuf="choose-buffer #{?@v31,-Z,}"
 
-if -F "#{>=:#{@major},3}" \
-  "bind - swapw -dt:-1 ; bind = swapw -dt:+1" \
+bind s chses
+bind w chwin
+bind B chbuf
 
 #
-set -g command-alias[120] chses='choose-tree -Ns'
-set -g command-alias[121] chwin='choose-tree -Nw'
-set -g command-alias[122] chbuf='choose-buffer'
 
-if -F "#{&&:#{==:#{@major},2},#{m:*2.[678]*,#{@version}}}" \
-  "bind s chses ; bind w chwin ; bind B chbuf" \
-  "bind s chses -Z ; bind w chwin -Z ; bind B chbuf -Z"
+set -gF command-alias[130] swapwm="swapw -#{?@v30,d,}t:-1"
+set -gF command-alias[131] swapwp="swapw -#{?@v30,d,}t:+1"
+
+bind - swapwm
+bind = swapwp
 
 ###
 
