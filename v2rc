@@ -79,11 +79,8 @@ bind * new -As * \; \
 if -F "#{==:#{@major},2}" \
   "bind - swapw -t:-1 ; bind = swapw -t:+1" \
 
-if -F "#{||:#{==:#{@major},3},#{@latest}}" \
+if -F "#{>=:#{@major},3}" \
   "bind - swapw -dt:-1 ; bind = swapw -dt:+1" \
-
-if -F "#{&&:#{==:#{@major},3},#{==:#{@minor},0}}" \
-  "bind - swapw -t:-1 \\; last ; bind = swapw -t:+1 \\; last"
 
 #
 set -g command-alias[120] chses='choose-tree -Ns'
