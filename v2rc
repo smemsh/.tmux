@@ -51,7 +51,6 @@ bind Q confirm -p "kill-server ?" kill-server
 
 ###
 
-# indices needed on 2.6, not on 3.4, others untested
 set -g command-alias[100] mkw='neww -dn'
 set -g command-alias[101] mkww='neww -n'
 set -g command-alias[110] selw='selectw -t'
