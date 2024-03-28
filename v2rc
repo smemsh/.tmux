@@ -54,6 +54,9 @@ set -gqF @v31 \
 # v3.2+ #{e||:}, ${N/w:}
 set -gqF @v32 "#{e|>=|f|0:#{@version},3.2}"
 
+# v3.3+ pane-border-indicators
+set -gqF @v33 "#{e|>=|f|0:#{@version},3.3}"
+
 ###
 
 bind H selectp -L
@@ -187,3 +190,9 @@ set -qwg window-status-format "\
 #{?window_flags,#[fg=colour058]#{window_flags}, }\
 #[default]\
 "
+
+set -g @panecolor_inactive 235
+set -gF @panecolor_active "#{?@v33,#{@panecolor_inactive},239}"
+set -gF pane-active-border-style "fg=colour#{@panecolor_active}"
+set -gF pane-border-style "fg=colour#{@panecolor_inactive}"
+if -F "#{@v33}" "set -g pane-border-indicators arrows"
