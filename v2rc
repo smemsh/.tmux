@@ -28,16 +28,12 @@ set -g @v21 1
 set -g @v24 1
 %endif
 
-# v2.6+ subst, #{m:} fnmatch
+# v2.6+ subst, #{m:} fnmatch, set -F
 set -gqF @version "#{s/2.1/2.6/:@version}"
-if -F "#{==:#{@version},2.6}" \
-  "set -g @v26 1" \
-  "set -g @v26 0"
+set -gF @v26 "#{==:#{@version},2.6}"
 
 # v2.7 choose-{tree,client,buffer} -Z
-if -F "#{&&:#{==:#{@major},2},#{m:*2.[789]*,#{@version}}}" \
-  "set -g @v27 1" \
-  "set -g @v27 0"
+set -gqF @v27 "#{&&:#{==:#{@major},2},#{m:*2.[789]*,#{@version}}}"
 
 # v3.0+ resubst, #{>=:}, #{m/r:} regex
 set -gqF @version "#{s/[^0-9.]//:version}"
@@ -52,14 +48,11 @@ if -F "#{==:#{@major},#{@version}}" \
    set -g @v30 1"
 
 # v3.1+ splitw -l %, -t {start}
-if -F "#{||:#{>=:#{@major},4},#{&&:#{==:#{@major},3},#{>=:#{@minor},1}}}" \
-  "set -g @v31 1" \
-  "set -g @v31 0"
+set -gqF @v31 \
+  "#{||:#{>=:#{@major},4},#{&&:#{==:#{@major},3},#{>=:#{@minor},1}}}"
 
 # v3.2+ #{e||:}, ${N/w:}
-if -F "#{e|>=|f|0:#{@version},3.2}" \
-  "set -g @v32 1" \
-  "set -g @v32 0"
+set -gqF @v32 "#{e|>=|f|0:#{@version},3.2}"
 
 ###
 
