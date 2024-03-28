@@ -1,4 +1,4 @@
-#
+# v2.6+
 
 set -qg renumber-windows on # not in v1.6 (u14)
 set -qg message-command-style fg=yellow,bg=black
