@@ -56,7 +56,7 @@ set-environment -gu GLIBC_TUNABLES
 # TODO those places will not exist forever
 #
 if-shell "\
-\$\(readlink /proc/\$\(awk 'BEGIN { \
+\$\(readlink /proc/\$\(gawk 'BEGIN { \
 	split(ENVIRON[\"TMUX\"], tvar, \",\"); \
 	pid = tvar[2]; \
 	print pid; \
