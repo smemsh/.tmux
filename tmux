@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
-#
-# tmux server malloc() should use madvise(MADV_HUGEPAGE), which helps
+# tmux invocation wrapper
+
+# if client, ensure use of the same tmux binary as server is using
+if [[ $TMUX ]]; then
+	tmuxpid=${TMUX#*,}
+	tmuxpid=${tmuxpid%,*}
+	/proc/$tmuxpid/exe "$@"
+	exit
+fi
+
+# if server, malloc() should use madvise(MADV_HUGEPAGE), which helps
 # the process to have less PTEs, so forking will be faster, which is
 # good especially with large amounts of scrollback, see tmux issue 3352
 #
