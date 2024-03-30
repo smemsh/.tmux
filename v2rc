@@ -52,10 +52,10 @@ set -gqF @v31 \
   "#{||:#{>=:#{@major},4},#{&&:#{==:#{@major},3},#{>=:#{@minor},1}}}"
 
 # v3.2+ #{e||:}, ${N/w:}
-set -gqF @v32 "#{e|>=|f|0:#{@version},3.2}"
+set -gqF @v32 "#{==:1,#{e|>=|f|0:#{@version},3.2}}"
 
 # v3.3+ pane-border-indicators
-set -gqF @v33 "#{e|>=|f|0:#{@version},3.3}"
+set -gqF @v33 "#{==:1,#{e|>=|f|0:#{@version},3.3}}"
 
 ###
 
