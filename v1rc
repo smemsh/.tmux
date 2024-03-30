@@ -1,6 +1,5 @@
 #
 
-bind-key Z resize-pane -Z
 bind-key z set-option -g status
 
 #
