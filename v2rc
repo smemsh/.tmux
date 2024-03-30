@@ -88,9 +88,9 @@ bind * new -As * \; \
 
 #
 
-set -gF command-alias[120] chses="choose-tree #{?@v31,-Z,} -Ns"
-set -gF command-alias[121] chwin="choose-tree #{?@v31,-Z,} -Nw"
-set -gF command-alias[122] chbuf="choose-buffer #{?@v31,-Z,}"
+set -gF command-alias[120] chses="choose-tree #{?@v27,-Z,} -Ns"
+set -gF command-alias[121] chwin="choose-tree #{?@v27,-Z,} -Nw"
+set -gF command-alias[122] chbuf="choose-buffer #{?@v27,-Z,}"
 
 bind s chses
 bind w chwin
