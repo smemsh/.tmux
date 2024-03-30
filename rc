@@ -70,4 +70,3 @@ test $x -eq 2 -a $y -ge 6; \
 "source-file ~/.tmux/v2rc" \
 "source-file ~/.tmux/v1rc" \
 ;
-#
