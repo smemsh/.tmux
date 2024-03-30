@@ -1,4 +1,4 @@
-# v2.6+
+#
 
 set -qg renumber-windows on # not in v1.6 (u14)
 set -qg message-command-style fg=yellow,bg=black
@@ -10,27 +10,8 @@ set-hook -g session-created "rename / ; set-hook -gu session-created"
 
 ###
 
-set -g @v20 0
-set -g @v21 0
-set -g @v24 0
-set -g @v26 0
-
-# v2.0 if-shell -F
-if -F "1" "set -g @version 2.0"
-set -g @v20 1
-
-# v2.1 set -q
-set -gq @version "2.1"
-set -g @v21 1
-
-# v2.4 %if/%endif
-%if 1
-set -g @v24 1
-%endif
-
-# v2.6+ subst, #{m:} fnmatch, set -F
-set -gqF @version "#{s/2.1/2.6/:@version}"
-set -gF @v26 "#{==:#{@version},2.6}"
+# v2.6+ from rc
+set -g @v26 1
 
 # v2.7 choose-{tree,client,buffer} -Z
 set -gqF @v27 "#{&&:#{==:#{@major},2},#{m:*2.[789]*,#{@version}}}"

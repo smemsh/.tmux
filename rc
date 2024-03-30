@@ -49,10 +49,14 @@ set-option -g status-right "%H%M"
 set-option -g history-limit 1048575 # nee 2147483647
 set-environment -gu GLIBC_TUNABLES
 
-# need tmux 2.6 for "advanced" config; ideally we could do if-shell -F
-# "#{version}" but -F was only added mostly in 2.5, we are running in
-# places with tmux as old as 1.6 TODO those places will not exist
-# forever
+# require tmux 2.6 for more advanced config; use v1 config before that.
+# we still run on hosts with tmux as old as 1.6 (u14, rhel6). u18 is 2.6
+#
+# v2.0+ if -F
+# v2.1+ set -q
+# v2.2+ set-hook, #{s/str/str:}
+# v2.4+ %if/%endif
+# v2.6+ #{m:}, set -F
 #
 if-shell \
 '\
