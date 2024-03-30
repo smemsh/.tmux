@@ -13,19 +13,18 @@ set-hook -g session-created "rename / ; set-hook -gu session-created"
 # v2.6+ from rc
 set -g @v26 1
 
-# v2.7 choose-{tree,client,buffer} -Z
-set -gqF @v27 "#{&&:#{==:#{@major},2},#{m:*2.[789]*,#{@version}}}"
+# v2.7+ choose-{tree,client,buffer} -Z
+set -gF @version "#{s/next-//:version}"
+set -gF @version "#{s/-rc//:@version}"
+set -gF @v27 "#{!=:2.6,#{@version}}"
 
-# v3.0+ resubst, #{>=:}, #{m/r:} regex
-set -gqF @version "#{s/[^0-9.]//:version}"
-if -F "#{@version}" "set -gqF @major \"#{s/.[0-9]+$//:@version}\""
-if -F "#{>=:#{@major},3}" \
-  "set -g @v27 1"
+# v3.0+ #{s/regex/str:}, #{>=:}, #{m/r:}
+set -gqF @major "#{s/\\.[0-9]+$//:@version}"
 if -F "#{==:#{@major},#{@version}}" \
   "set -g @major 2 ; \
+   set -gF @minor \"#{s/2.//:@version}\" ; \
    set -g @v30 0" \
-  "set -gqF @major \"#{s/.[0-9]+$//:@version}\" ; \
-   set -gqF @minor \"#{s/[0-9]+.//:@version}\" ; \
+  "set -gqF @minor \"#{s/[0-9]+.//:@version}\" ; \
    set -g @v30 1"
 
 # v3.1+ splitw -l %, -t {start}
