@@ -10,6 +10,8 @@ set-option -g status-bg black
 set-option -g status-left "\
 [#[fg=yellow]#S#[default]] #[fg=colour060]#(hostname -s)#[default]"
 
+set-option -g status-right "#[default] ┊"
+
 #
 set-option -wg window-status-current-format "\
 #[default]»#[fg=colour148]#W#[default]#[fg=colour058]#F#[default]"
