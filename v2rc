@@ -112,7 +112,8 @@ set -qg status-left "\
 #[fg=colour099]\
 #(git -C #{pane_current_path} \
   symbolic-ref --short HEAD 2>/dev/null) \
-#(git -C #{pane_current_path} \
+#(GIT_OPTIONAL_LOCKS=0 \
+  git -C #{pane_current_path} \
   status --untracked-files=normal --porcelain 2>/dev/null \
   | gawk '\
     BEGIN { \
