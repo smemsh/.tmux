@@ -39,15 +39,15 @@ set -gqF @v33 "#{==:1,#{e|>=|f|0:#{@version},3.3}}"
 
 ###
 
-bind H selectp -L
-bind J selectp -D
-bind K selectp -U
-bind L selectp -R
+bind h selectp -L
+bind j selectp -D
+bind k selectp -U
+bind l selectp -R
 
-bind h selectw -p
-bind j switchc -n
-bind k switchc -p
-bind l selectw -n
+bind H selectw -p
+bind J switchc -n
+bind K switchc -p
+bind L selectw -n
 
 bind 0 selectw -t :^
 bind '$' selectw -t ':$'
