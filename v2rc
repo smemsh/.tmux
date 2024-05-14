@@ -55,8 +55,8 @@ bind '$' selectw -t ':$'
 bind Space selectw -l
 bind C-Space switchc -l # no S-space keysyms?
 
-bind z set -qg status
-bind Z resize-pane -Z
+bind Z set -qg status
+bind z resize-pane -Z
 
 bind Q confirm -p "kill-server ?" kill-server
 
