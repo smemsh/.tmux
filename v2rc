@@ -104,6 +104,11 @@ set -gF command-alias[131] swapwp="swapw -#{?@v30,d,}t:+1"
 bind - swapwm
 bind = swapwp
 
+#
+
+set -gF command-alias[140] lastpane="last-pane #{?@v31,-Z,}"
+bind \; lastpane
+
 ###
 
 set -qg status-left "\
