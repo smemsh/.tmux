@@ -25,7 +25,11 @@ fi
 #
 if [[ $GLIBC_TUNABLES ]]
 then echo "tmux wrapper aborting to avoid infinite loop" >&2; false; exit
-else export GLIBC_TUNABLES=glibc.malloc.hugetlb=1
+else
+	export          GLIBC_TUNABLES=glibc.malloc.hugetlb=1
+	GLIBC_TUNABLES=$GLIBC_TUNABLES:glibc.malloc.mmap_threshold=4096
+	GLIBC_TUNABLES=$GLIBC_TUNABLES:glibc.malloc.trim_threshold=4096
+	GLIBC_TUNABLES=$GLIBC_TUNABLES:glibc.malloc.mmap_max=67108864
 fi
 
 # find the real tmux path by removing our own dir from PATH and then
