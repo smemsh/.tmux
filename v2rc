@@ -17,6 +17,7 @@ set -g @v26 1
 # v2.7+ choose-{tree,client,buffer} -Z
 set -gF @version "#{s/next-//:version}"
 set -gF @version "#{s/-rc//:@version}"
+set -gF @version "#{s/3.5a/3.5/:@version}"
 set -gF @v27 "#{!=:2.6,#{@version}}"
 
 # v3.0+ #{s/regex/str:}, #{>=:}, #{m/r:}
