@@ -50,4 +50,4 @@ PATH=$(
 realexe=$(type -P ${0##*/})
 PATH=$savedpath
 
-$realexe "$@"
+exec $realexe "$@"
