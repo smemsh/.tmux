@@ -5,8 +5,7 @@
 if [[ $TMUX ]]; then
 	tmuxpid=${TMUX#*,}
 	tmuxpid=${tmuxpid%,*}
-	/proc/$tmuxpid/exe "$@"
-	exit
+	exec /proc/$tmuxpid/exe "$@"
 fi
 
 # if server, malloc() should use madvise(MADV_HUGEPAGE), which helps
