@@ -5,7 +5,7 @@
 if [[ $TMUX ]]; then
 	tmuxpid=${TMUX#*,}
 	tmuxpid=${tmuxpid%,*}
-	exec /proc/$tmuxpid/exe "$@"
+	exec -a tmux /proc/$tmuxpid/exe "$@"
 fi
 
 # if server, malloc() should use madvise(MADV_HUGEPAGE), which helps
@@ -49,4 +49,4 @@ PATH=$(
 realexe=$(type -P ${0##*/})
 PATH=$savedpath
 
-exec $realexe "$@"
+exec -a tmux $realexe "$@"
