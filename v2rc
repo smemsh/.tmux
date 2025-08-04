@@ -39,6 +39,9 @@ set -gqF @v32 "#{==:1,#{e|>=|f|0:#{@version},3.2}}"
 # v3.3+ pane-border-indicators
 set -gqF @v33 "#{==:1,#{e|>=|f|0:#{@version},3.3}}"
 
+# v3.4+ osc133
+set -gqF @v34 "#{==:1,#{e|>=|f|0:#{@version},3.4}}"
+
 ###
 
 bind h selectp -L
@@ -61,6 +64,12 @@ bind Z set -qg status
 bind z resize-pane -Z
 
 bind Q confirm -p "kill-server ?" kill-server
+
+###
+
+if -F "#{@v34}" "\
+  bind -T copy-mode-vi ']' send -X next-prompt \; \
+  bind -T copy-mode-vi '[' send -X previous-prompt"
 
 ###
 
