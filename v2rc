@@ -67,6 +67,9 @@ bind Q confirm -p "kill-server ?" kill-server
 
 ###
 
+if -F "#{@v30}" "\
+  bind -T copy-mode-vi Enter send -X copy-selection-no-clear"
+
 if -F "#{@v34}" "\
   bind -T copy-mode-vi ']' send -X next-prompt \; \
   bind -T copy-mode-vi '[' send -X previous-prompt"
