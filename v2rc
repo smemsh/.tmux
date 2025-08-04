@@ -74,6 +74,14 @@ if -F "#{@v34}" "\
   bind -T copy-mode-vi ']' send -X next-prompt \; \
   bind -T copy-mode-vi '[' send -X previous-prompt"
 
+bind -T copy-mode-vi ? \
+  command-prompt -i -p "(isearch-up)" "\
+    send-keys -X search-backward-incremental \"%%\""
+
+bind -T copy-mode-vi / \
+  command-prompt -i -p "(isearch-down)" "\
+    send-keys -X search-forward-incremental \"%%\""
+
 ###
 
 set -g command-alias[100] mkw='neww -dn'
