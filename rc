@@ -28,7 +28,7 @@ set-option -g status-right "%H%M"
 # status format subshells using #() (and new panes) fork and copy PTEs
 # which become large and copy very slow with large scrollback, see tmux
 # issue 3352 for description, workarounds and potential [future]
-# solution with CLONE_VFORK
+# solution with posix_spawn()
 #
 # to add 10M scrollback for testing:
 # $ perl -le 'for ($i = 0; $i < 10000000; $i++) {print "a" x 78}'
@@ -41,10 +41,22 @@ set-option -g status-right "%H%M"
 # interaction altogether, cpu 100%
 #
 # with 10M lines using GLIBC_TUNABLES=glibc.malloc.hugetlb=1 and with
-# /sys/kernel/mm/transparent_hugepage/ enable=madvise, defrag=always,
-# the "refresh-client -S" time reduces to 0.05s, so we'll keep this in
-# our invocation wrapper (see .bash commit dbe32d9), but we don't want
-# all tmux-started procs to get it
+# /sys/kernel/mm/transparent_hugepage/ enable=madvise, the time for
+# "refresh-client -S" reduces to 0.05s (IFF the system has a lot of
+# memory free and highly tuned khugepaged), so we'll keep this in our
+# invocation wrapper (see .bash commit dbe32d9), but we don't want all
+# tmux-started procs to get it automatically so we unset.
+#
+# UPDATE: we're now using posix_spawn patch for background jobs from
+# tmux PR 4496 which makes the penalty exist only on new-window or
+# when entering scrollback (counting lines maybe?).  but we leave it at
+# 1M... even once the window is closed (and presumably the allocations
+# are freed), the memory doesn't seem to ever be returned to the system,
+# even using a low mmap_threshold of 4096.  this might be a glibc
+# allocator issue.  also the history-limit is per-window, and is in
+# lines, so it gets worse as more and larger-dimension windows reach it.
+# issue 3352 discusses a desire for global byte limit instead, but this
+# is not yet implemented.
 #
 set-option -g history-limit 1048575 # nee 2147483647
 set-environment -gu GLIBC_TUNABLES
